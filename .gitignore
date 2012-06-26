@@ -1,0 +1,15 @@
+*core
+*stuckdump
+*~
+*elc
+anything-c-adaptive-history
+auto-install/*
+auto-save-list
+customize.el
+ddskk/custom.el*
+framesize.el
+games
+riece/log
+server
+session*
+url
