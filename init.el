@@ -1,5 +1,10 @@
 ;;; 初期化ファイル
 
+(setq user-full-name "Yasuo Hojo")
+(setq user-email-address "yhojo@pp.iij4u.or.jp")
+
+(require 'cl)
+
 ;; 言語を日本語にする
 (set-language-environment 'Japanese)
 ;; 極力UTF-8とする
@@ -27,4 +32,13 @@
        ;; Mac用IME設定
        (mac-input-method-mode)
        ))
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emu")
+
+(load-library "pukiwiki-mode")
+(setq pukiwiki-process-timeout 300)
+(setq pukiwiki-site-list
+      '(("MyWiki" "http://10.8.9.1/~yhojo/wiki/index.php")
+      ))
 
