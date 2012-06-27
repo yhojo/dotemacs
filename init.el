@@ -64,7 +64,7 @@
        (mac-input-method-mode)
        ))
 
-(add-to-load-path "site-lisp")
+(add-to-load-path "lisp")
 
 (load-library "pukiwiki-mode")
 (setq pukiwiki-process-timeout 300)
