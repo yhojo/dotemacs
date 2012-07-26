@@ -3,6 +3,12 @@
 (setq user-full-name "Yasuo Hojo")
 (setq user-email-address "yhojo@pp.iij4u.or.jp")
 
+;;; バックアップファイルを作らない
+(setq backup-inhibited t)
+
+;;; 終了時にオートセーブファイルを消す
+(setq delete-auto-save-files t)
+
 ;; Emacs 設定ディレクトリを設定。Emacs 22以下用
 ;; Emacs 23.1 以上では user-emacs-directory 変数が用意されているのでそれを利用
 (unless (boundp 'user-emacs-directory)
@@ -20,6 +26,17 @@
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
             (normal-top-level-add-subdirs-to-load-path))))))
 
+;; 指定ディレクトリで正規表現に合致するファイルをロードする。
+(defun load-directory-files (dir &optional regex)
+  (let*
+      ((regex (or regex ".+"))
+       (files (and
+               (file-accessible-directory-p dir)
+               (directory-files dir 'full regex))))
+    (mapc (lambda (file)
+            (when (load file nil t)
+              (message "`%s' loaded." file))) files)))
+
 ;; Common Lisp互換ライブラリの読み込み。
 (require 'cl)
 
@@ -28,57 +45,12 @@
 ;; 極力UTF-8とする
 (prefer-coding-system 'utf-8)
 
-;; 環境に合わせた初期化を実行する。
-(cond ((eq window-system 'ns)
-       ;; default screen size
-       (setq default-frame-alist
-	     (append (list
-		      '(width . 60) ;; TODO: 何故か、Cocoa Emacsでは幅が全角ベース
-		      '(height . 37)
-		      '(top . 0)
-		      '(left . 0))
-		     default-frame-alist))
-       ;; kill-ringはテキスト属性を保存しない
-       (defadvice kill-new (around my-kill-ring-disable-text-property activate)
-	 (let ((new (ad-get-arg 0)))
-	   (set-text-properties 0 (length new) nil new)
-	   ad-do-it))
-       ;; MacOS Cocoa Emacs font settings
-       (set-face-attribute
-	'default nil
-	:family "M+1VM+IPAG circle"
-	:height 140)
-       (set-fontset-font
-	(frame-parameter nil 'font)
-	'japanese-jisx0208
-	'("M+1VM+IPAG circle" . "iso10646-1"))
-       (set-fontset-font
-	(frame-parameter nil 'font)
-	'japanese-jisx0208
-	'("M+1VM+IPAG circle" . "iso10646-1"))
-       (set-fontset-font
-	(frame-parameter nil 'font)
-	'mule-unicode-0100-24ff
-	'("monaco" . "iso10646-1"))
-       ;; Mac用IME設定
-       (mac-input-method-mode)
-       ))
-
+;; lispディレクトリにパスを通す。
 (add-to-load-path "lisp")
 
-(load-library "pukiwiki-mode")
-(setq pukiwiki-process-timeout 300)
-(setq pukiwiki-site-list
-      '(("MyWiki" "http://10.8.9.1/~yhojo/wiki/index.php")
-      ))
+;; Emacs23の時はパッケージシステムをロードする。
+(when (= emacs-major-version 23)
+  (require 'package))
 
- ;;
- ;; タイトル挿入スクリプト
- ;;
- (defun insert-title ()
-   "Insert Pukiwiki Style log title line"
-   (interactive)
-   (let ((today (format-time-string "%Y-%m-%d" (current-time)))
-         (title (read-string "Title: " "")))
-     (insert "* " title " - " today)))
- (global-set-key "\C-x\C-^" 'insert-title)
+;; 各種初期かスクリプトを片っ端っから実行する。
+(load-directory-files user-emacs-directory "^init-.+el$")
