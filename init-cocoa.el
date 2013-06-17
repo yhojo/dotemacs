@@ -6,7 +6,7 @@
        ;; default screen size
        (setq default-frame-alist
 	     (append (list
-		      '(width . 60) ;; TODO: 何故か、Cocoa Emacsでは幅が全角ベース
+		      '(width . 120) ;; TODO: 何故か、Cocoa Emacsでは幅が全角ベース
 		      '(height . 37)
 		      '(top . 0)
 		      '(left . 0))
