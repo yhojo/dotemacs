@@ -12,7 +12,7 @@
 		      '(left . 0))
 		     default-frame-alist))
        ;; 透過表示設定
-       (set-frame-parameter (selected-frame) 'alpha '(79 60))
+       (set-frame-parameter (selected-frame) 'alpha '(89 65))
        ;; kill-ringはテキスト属性を保存しない
        (defadvice kill-new (around my-kill-ring-disable-text-property activate)
 	 (let ((new (ad-get-arg 0)))
@@ -29,7 +29,7 @@
 	'("M+1VM+IPAG circle" . "iso10646-1"))
        (set-fontset-font
 	(frame-parameter nil 'font)
-	'japanese-jisx0208
+	'katakana-jisx0201
 	'("M+1VM+IPAG circle" . "iso10646-1"))
        (set-fontset-font
 	(frame-parameter nil 'font)
