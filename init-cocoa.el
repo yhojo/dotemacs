@@ -6,10 +6,13 @@
        ;; default screen size
        (setq default-frame-alist
 	     (append (list
-		      '(width . 120) ;; TODO: 何故か、Cocoa Emacsでは幅が全角ベース
+		      '(width . 120)
 		      '(height . 37)
 		      '(top . 0)
-		      '(left . 0))
+		      '(left . 0)
+		      '(foreground-color . "white")
+		      '(background-color . "black")
+		      '(cursor-color     . "white"))
 		     default-frame-alist))
        ;; 透過表示設定
        (set-frame-parameter (selected-frame) 'alpha '(89 65))
