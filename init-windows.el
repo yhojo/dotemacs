@@ -4,7 +4,7 @@
        (setq default-frame-alist
 	     (append '((foreground-color     . "white") ;; 文字色
 		       (background-color     . "black") ;; 背景色
-		       (cursor-color         . "red"  ) ;; カーソル色
+		       (cursor-color         . "white"  ) ;; カーソル色
 		       ) default-frame-alist))
        (setq initial-frame-alist default-frame-alist)
        (w32-ime-initialize)
