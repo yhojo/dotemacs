@@ -15,9 +15,9 @@
 		      '(cursor-color     . "white"))
 		     default-frame-alist))
        ;; 透過表示設定
-       (set-frame-parameter (selected-frame) 'alpha '(89 65))
+       (set-frame-parameter (selected-frame) 'alpha '(80 65))
        (add-hook 'after-make-frame-functions
-		 (function (lambda (frame) (set-frame-parameter frame 'alpha '(89 65)))))
+		 (function (lambda (frame) (set-frame-parameter frame 'alpha '(80 65)))))
        ;; kill-ringはテキスト属性を保存しない
        (defadvice kill-new (around my-kill-ring-disable-text-property activate)
 	 (let ((new (ad-get-arg 0)))
