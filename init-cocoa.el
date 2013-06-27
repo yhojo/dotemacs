@@ -25,6 +25,12 @@
 	   ad-do-it))
        ;; MacOS Cocoa Emacs font settings
        (setenv "LANG" "ja_JP.UTF-8")
+       ;; Unicode NFD problem. see http://www.sakito.com/2010/05/mac-os-x-normalization.html
+       (require 'ucs-normalize)
+       (setq shell-mode-hook
+	     (function (lambda()
+			 (set-buffer-process-coding-system 'utf-8-hfs
+							   'utf-8))))
        (set-face-attribute
 	'default nil
 	:family "M+1VM+IPAG circle"
