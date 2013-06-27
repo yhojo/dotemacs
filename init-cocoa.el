@@ -24,6 +24,7 @@
 	   (set-text-properties 0 (length new) nil new)
 	   ad-do-it))
        ;; MacOS Cocoa Emacs font settings
+       (setenv "LANG" "ja_JP.UTF-8")
        (set-face-attribute
 	'default nil
 	:family "M+1VM+IPAG circle"
