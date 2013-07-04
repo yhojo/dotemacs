@@ -50,4 +50,21 @@
        ;; Mac用IME設定
        (setq default-input-method "MacOSX")
 ;       (mac-input-method-mode 1)
+       ;;
+       ;; トラックパッド・スクロールの設定
+       ;;
+       (defun scroll-down-with-lines ()
+	 "" (interactive) (scroll-down 3))
+       (defun scroll-up-with-lines ()
+	 "" (interactive) (scroll-up 3))
+       (global-set-key [wheel-up] 'scroll-down-with-lines)
+       (global-set-key [wheel-down] 'scroll-up-with-lines)
+       (global-set-key [double-wheel-up] 'scroll-down-with-lines)
+       (global-set-key [double-wheel-down] 'scroll-up-with-lines)
+       (global-set-key [triple-wheel-up] 'scroll-down-with-lines)
+       (global-set-key [triple-wheel-down] 'scroll-up-with-lines)
+       ;;
+       ;; 謝ってCMD-Qを押してしまうことの対策。
+       ;;
+       (setq confirm-kill-emacs 'y-or-n-p)
        ))
