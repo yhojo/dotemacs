@@ -5,6 +5,7 @@
 	     (append '((foreground-color     . "white") ;; 文字色
 		       (background-color     . "black") ;; 背景色
 		       (cursor-color         . "white"  ) ;; カーソル色
+		       (alpha                . (80 54)) ;; 透過設定
 		       ) default-frame-alist))
        (setq initial-frame-alist default-frame-alist)
        (w32-ime-initialize)
