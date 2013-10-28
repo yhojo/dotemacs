@@ -1,5 +1,11 @@
 ;;; 初期化ファイル
 
+;;
+;; MacOS Xの場合、カレントディレクトリを変更しないとつらい。
+;;
+(cond ((eq window-system 'ns)
+       (cd "~")))
+
 (setq user-full-name "Yasuo Hojo")
 (setq user-email-address "yhojo@pp.iij4u.or.jp")
 
