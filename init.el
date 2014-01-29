@@ -15,6 +15,16 @@
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 
+;;
+;; C言語のインデント設定
+;;
+(add-hook 'c-mode-common-hook
+      (lambda ()
+        ;;(setq tab-width 8)
+        (setq indent-tabs-mode nil) ; インデントは空白文字で行う（TABコードを空白に変換）
+        (setq c-basic-offset 2))
+      t)
+
 ;; Emacs 設定ディレクトリを設定。Emacs 22以下用
 ;; Emacs 23.1 以上では user-emacs-directory 変数が用意されているのでそれを利用
 (unless (boundp 'user-emacs-directory)
