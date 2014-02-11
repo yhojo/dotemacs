@@ -68,5 +68,25 @@
 (when (= emacs-major-version 23)
   (require 'package))
 
-;; 各種初期かスクリプトを片っ端っから実行する。
+;;
+;; verilog-modeの設定
+;;
+(add-hook 'verilog-mode-hook
+	  (lambda ()
+	    (setq tab-width 4)))
+(setq verilog-indent-level             2
+      verilog-indent-level-module      2
+      verilog-indent-level-declaration 2
+      verilog-indent-level-behavioral  2
+      verilog-indent-level-directive   1
+      verilog-case-indent              2
+      verilog-auto-newline             nil
+      verilog-auto-indent-on-newline   nil
+      verilog-tab-always-indent        t
+      verilog-auto-endcomments         t
+      verilog-minimum-comment-distance 40
+      verilog-indent-begin-after-if    t
+      verilog-auto-lineup              '(all))
+
+;; 各種初期化スクリプトを片っ端っから実行する。
 (load-directory-files user-emacs-directory "^init-.+el$")
