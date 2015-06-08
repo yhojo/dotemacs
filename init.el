@@ -15,6 +15,9 @@
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 
+;;; 行移動がおかしいのを直す。
+(setq line-move-visual nil)
+
 ;;
 ;; C言語のインデント設定
 ;;
