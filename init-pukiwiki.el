@@ -1,7 +1,7 @@
 (load-library "pukiwiki-mode")
 (setq pukiwiki-process-timeout 300)
 (setq pukiwiki-site-list
-      '(("MyWiki" "http://10.8.9.1/~yhojo/wiki/index.php")
+      '(("MyWiki" "http://10.0.1.91/~yhojo/wiki/index.php")
       ))
 
  ;;
