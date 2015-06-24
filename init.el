@@ -18,16 +18,6 @@
 ;;; 行移動がおかしいのを直す。
 (setq line-move-visual nil)
 
-;;
-;; C言語のインデント設定
-;;
-(add-hook 'c-mode-common-hook
-      (lambda ()
-        ;;(setq tab-width 8)
-        (setq indent-tabs-mode nil) ; インデントは空白文字で行う（TABコードを空白に変換）
-        (setq c-basic-offset 2))
-      t)
-
 ;; Emacs 設定ディレクトリを設定。Emacs 22以下用
 ;; Emacs 23.1 以上では user-emacs-directory 変数が用意されているのでそれを利用
 (unless (boundp 'user-emacs-directory)
@@ -67,9 +57,51 @@
 ;; lispディレクトリにパスを通す。
 (add-to-load-path "lisp")
 
+;;
+;; C言語のインデント設定
+;;
+(add-hook 'c-mode-common-hook
+      (lambda ()
+        ;;(setq tab-width 8)
+        (setq indent-tabs-mode nil) ; インデントは空白文字で行う（TABコードを空白に変換）
+        (setq c-basic-offset 2))
+      t)
+;;
+;; コンパイル時に*compile*バッファをスクロールする。
+;; 
+(setq compilation-scroll-output t)
+
 ;; Emacs23の時はパッケージシステムをロードする。
 (when (= emacs-major-version 23)
-  (require 'package))
+  (require 'package)
+  (add-to-list 'package-archives
+			   '("melpa" . "http://melpa.org/packages/") t)
+  (when (< emacs-major-version 24)
+	;; For important compatibility libraries like cl-lib
+	(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+	(add-to-list 'package-archives
+				 '("melpa-stable" . "http://stable.melpa.org/packages/") t))
+  (package-initialize))
+
+
+;;
+;; cpputils-cmake
+;; https://github.com/redguardtoo/cpputils-cmake
+;;
+;(require 'cpputils-cmake) ;; package.elで組み込んだときはrequireはいらない
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (if (derived-mode-p 'c-mode 'c++-mode)
+                (cppcm-reload-all)
+              )))
+;; OPTIONAL, somebody reported that they can use this package with Fortran
+;(add-hook 'c90-mode-hook (lambda () (cppcm-reload-all)))
+;; OPTIONAL, avoid typing full path when starting gdb
+;(global-set-key (kbd "C-c C-g")
+;				'(lambda ()(interactive) (gud-gdb (concat "gdb --fullname " (cppcm-get-exe-path-current-buffer)))))
+(global-set-key "\C-xc" 'compile)
+;; OPTIONAL, some users need specify extra flags forwarded to compiler
+;;(setq cppcm-extra-preprocss-flags-from-user '("-I/usr/src/linux/include" "-DNDEBUG"))
 
 ;;
 ;; verilog-modeの設定
