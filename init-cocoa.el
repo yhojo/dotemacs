@@ -67,4 +67,19 @@
        ;; 謝ってCMD-Qを押してしまうことの対策。
        ;;
        (setq confirm-kill-emacs 'y-or-n-p)
-       ))
+       )
+
+      ;;
+      ;; PATH変数を引き継ぐための関数定義
+      ;;
+      (defun set-exec-path-from-shell-PATH ()
+        "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
+
+This is particularly useful under Mac OSX, where GUI apps are not started from a shell."
+        (interactive)
+        (let ((path-from-shell (replace-regexp-in-string "[ \t\n]*$" "" (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+          (setenv "PATH" path-from-shell)
+          (setq exec-path (split-string path-from-shell path-separator))))
+      ;; PATH変数を引き継ぐ
+      (set-exec-path-from-shell-PATH)
+      )
